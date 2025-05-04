@@ -41,6 +41,12 @@ app.MapGet("/todoitems/thisweek", async (TodoDb db) =>
     return todosThisWeek.Any() ? Results.Ok(todosThisWeek) : Results.NotFound();
 });
 
+app.MapPost("/todoitems", async (ToDo todo, TodoDb db) =>
+{
+    db.Todos.Add(todo);
+    await db.SaveChangesAsync();
 
+    return Results.Created($"/todoitems/{todo.Id}", todo);
+});
 
 app.Run();
