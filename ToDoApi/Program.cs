@@ -49,4 +49,20 @@ app.MapPost("/todoitems", async (ToDo todo, TodoDb db) =>
     return Results.Created($"/todoitems/{todo.Id}", todo);
 });
 
+app.MapPut("/todoitems/{id}", async (int id, ToDo updatedTodo, TodoDb db) =>
+{
+    var todo = await db.Todos.FindAsync(id);
+    if (todo is null) return Results.NotFound();
+
+    todo.Title = updatedTodo.Title;
+    todo.Description = updatedTodo.Description;
+    todo.Expiry = updatedTodo.Expiry;
+    todo.CompletePercent = updatedTodo.CompletePercent;
+
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+
+
+
 app.Run();
