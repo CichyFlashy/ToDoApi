@@ -64,5 +64,15 @@ app.MapPut("/todoitems/{id}", async (int id, ToDo updatedTodo, TodoDb db) =>
 });
 
 
+app.MapPatch("/todoitems/{id}", async (int id, TodoDb db) =>
+{
+    var todo = await db.Todos.FindAsync(id);
+    if (todo is null) return Results.NotFound();
+
+    todo.CompletePercent = 100;
+    await db.SaveChangesAsync();
+    return Results.Ok(todo);
+});
+
 
 app.Run();
