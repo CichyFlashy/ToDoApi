@@ -1,12 +1,28 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ToDoApi;
 
 //Build application
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<TodoDb>(opt =>
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+if (builder.Environment.IsEnvironment("Test"))
+{
+    builder.Services.AddDbContext<TodoDb>(options =>
+        options.UseInMemoryDatabase("TestDb"));
+}
+else
+{
+    builder.Services.AddDbContext<TodoDb>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var app = builder.Build();
+
+// Apply database migrations (Ensure the database is up-to-date)
+using var scope = app.Services.CreateScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<TodoDb>();
+if (dbContext.Database.IsRelational())
+{
+    dbContext.Database.Migrate();
+}
 
 // Get all todos
 app.MapGet("/todoitems", async (TodoDb db) =>
@@ -108,4 +124,7 @@ app.MapPatch("/todoitems/{id}/done", async (int id, TodoDb db) =>
     return Results.Ok(todo);
 });
 
+
 app.Run();
+
+public partial class Program { }

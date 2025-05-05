@@ -27,11 +27,18 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+    {
+      "profiles": {
+        "IIS Express": {
+          "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Test"
+          }
+        },
+        "ProjectName": {
+          "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Test"
+          }
+        }
       }
     }
   }
