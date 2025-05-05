@@ -1,15 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToDoApi;
 
-//Build application
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Adding database configuration depending on the environment
 if (builder.Environment.IsEnvironment("Test"))
 {
+    // Use an in-memory database for testing
     builder.Services.AddDbContext<TodoDb>(options =>
         options.UseInMemoryDatabase("TestDb"));
 }
 else
 {
+    // Use PostgreSQL for other environments
     builder.Services.AddDbContext<TodoDb>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 }
