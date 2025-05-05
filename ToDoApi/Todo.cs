@@ -10,5 +10,6 @@ namespace ToDoApi
         public required string Title { get; set; }
         public string? Description { get; set; }
         public double CompletePercent { get; set; }
+        public bool IsDone { get; set; } = false;
     }
 }
