@@ -12,7 +12,6 @@ A minimal REST API for managing ToDo tasks built with **.NET 8**, **PostgreSQL**
 - Validation using Data Annotations
 - Unit and integration tests with **xUnit**
 - Docker support for easy deployment
-- Follows **Conventional Commits**
 - Fully commented and ready to compile
 
 ---
@@ -25,7 +24,6 @@ A minimal REST API for managing ToDo tasks built with **.NET 8**, **PostgreSQL**
 - [xUnit](https://xunit.net/)
 - [Docker](https://www.docker.com/)
 - [Docker Compose (optional)](https://docs.docker.com/compose/)
-- [Conventional Commits](https://www.conventionalcommits.org/)
 
 ---
 
